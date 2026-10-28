@@ -149,63 +149,36 @@ graph TD
 
 
 
-**## 🔐 Phase 2: Auth, Session & API Gateway Integration**
+**## 🔐 Phase 2: Auth, Session & API Gateway Integration** *(Completed & Verified)*
 
+### Step 2.1 — API Client & Axios Interceptor `[COMPLETED]`
+- **Action:** Configure central HTTP client targeting the `/api/v1` FastAPI Gateway with automatic JWT token refresh.
+- **Capabilities:**
+  - Bearer token injection on authenticated endpoints from Zustand store.
+  - Automatic 401 interception: triggers `/api/v1/auth/refresh` or clean logout redirect.
+  - Standardized error formatting (Pydantic validation error parsing via `parseApiError`).
+- **Files Created:**
+  - `src/types/api.ts`
+  - `src/lib/endpoints.ts`
+  - `src/lib/api-client.ts`
 
-
-**### Step 2.1 — API Client & Axios Interceptor**
-
-\- **\*\*Action:\*\*** Configure central HTTP client targeting the \`/api/v1\` FastAPI Gateway with automatic JWT token refresh.
-
-\- **\*\*Capabilities:\*\***
-
-  - Bearer token injection on authenticated endpoints.
-
-  - Automatic 401 interception: triggers \`/api/v1/auth/refresh\` or clean logout redirect.
-
-  - Standardized error formatting (Pydantic validation error parsing).
-
-\- **\*\*Files to Create:\*\***
-
-  - \`src/lib/api-client.ts\`
-
-  - \`src/lib/endpoints.ts\`
-
-  - \`src/types/api.ts\`
-
-
-
-**### Step 2.2 — Google OAuth 2.0 & Session Store (Zustand)**
-
-\- **\*\*Action:\*\*** Implement authentication store and OAuth callback handler strictly validating \`@srmap.edu.in\`.
-
-\- **\*\*State Properties:\*\***
-
-  - \`user\`: \`{ id, email, full_name, role, ap_number, is_active }\`
-
-  - \`isAuthenticated\`: \`boolean\`
-
-  - \`token\`: \`string | null\`
-
-  - \`login()\`, \`logout()\`, \`refreshUser()\`
-
-\- **\*\*Files to Create:\*\***
-
-  - \`src/stores/useAuthStore.ts\`
-
-  - \`src/pages/auth/Login.tsx\` (with "Continue with SRM-AP Google Account" button)
-
-  - \`src/pages/auth/AuthCallback.tsx\` (exchanges Google code for backend JWT)
-
-  - \`src/components/auth/ProtectedRoute.tsx\` (Role-based route guard for \`STUDENT\`, \`TRAINER\`, \`ADMIN\`, \`SUPER_ADMIN\`)
-
-\- 🔍 **\*\*User Verification Checkpoint 2:\*\***
-
-  - Test login flow with mock/real Google token.
-
-  - Attempt accessing \`/admin\` as a \`STUDENT\` -> Verify immediate redirect to 403 Slate.
-
-  - Test session expiration and automatic token refresh.
+### Step 2.2 — Google OAuth 2.0 & Session Store (Zustand) `[COMPLETED]`
+- **Action:** Implement authentication store and OAuth callback handler strictly validating `@srmap.edu.in`.
+- **State Properties:**
+  - `user`: `{ id, email, full_name, role, ap_number, is_active }`
+  - `isAuthenticated`: `boolean`
+  - `token`: `string | null`
+  - `devSwitchRole()`, `logout()`, `hasRole()`
+- **Files Created:**
+  - `src/stores/useAuthStore.ts`
+  - `src/pages/auth/Login.tsx` (with "Continue with SRM-AP Google Account", `@srmap.edu.in` domain lock, and quick role switcher)
+  - `src/pages/auth/AuthCallback.tsx` (exchanges authorization code, validates `@srmap.edu.in`, and redirects by role)
+  - `src/components/auth/ProtectedRoute.tsx` (Role-based route guard for `STUDENT`, `STAFF`, `TRAINER`, `ADMIN`, `SUPER_ADMIN` with tactile 403 Forbidden Slate)
+- 🔍 **User Verification Checkpoint 2:** `[VERIFIED]`
+  - Tested login flow with role switcher & Google SSO callback.
+  - Attempted accessing `/admin/dashboard` as a `STUDENT` -> verified immediate 403 Forbidden Slate with clear recovery actions.
+  - Tested switching to `ADMIN` -> immediately permitted access to `/admin/dashboard`.
+  - Tested Sign Out -> successfully cleared session back to guest state. (Verified via automated browser test).
 
 
 

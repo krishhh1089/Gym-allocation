@@ -1,44 +1,59 @@
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { ComponentShowcase } from './pages/public/ComponentShowcase';
+import { Login } from './pages/auth/Login';
+import { AuthCallback } from './pages/auth/AuthCallback';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { useAuthStore } from './stores/useAuthStore';
+import { Badge, Button } from './components/ui';
+import { LogIn, LogOut, UserCheck, Shield, ArrowRight } from 'lucide-react';
 
 export default function App() {
   return (
     <div className="app-root">
       <Routes>
+        {/* Public & Verification Routes */}
         <Route path="/" element={<HomePortalNavigator />} />
         <Route path="/components" element={<ComponentShowcase />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/auth/callback" element={<AuthCallbackPage />} />
-        <Route path="/onboarding" element={<StudentOnboardingPage />} />
-        
-        {/* Student Portal */}
-        <Route path="/student/dashboard" element={<PlaceholderSlate title="Student Dashboard" role="STUDENT" />} />
-        <Route path="/student/qr-code" element={<PlaceholderSlate title="Student QR Code" role="STUDENT" />} />
-        <Route path="/student/slots" element={<PlaceholderSlate title="Browse Eligible Slots" role="STUDENT" />} />
-        <Route path="/student/transfer" element={<PlaceholderSlate title="Protected Slot Transfer Engine" role="STUDENT" />} />
-        <Route path="/student/attendance" element={<PlaceholderSlate title="Attendance History & Absence Risk" role="STUDENT" />} />
-        <Route path="/student/complaints" element={<PlaceholderSlate title="Student Support Tickets" role="STUDENT" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
 
-        {/* Staff Scanner Portal */}
-        <Route path="/staff/scanner" element={<PlaceholderSlate title="Turnstile Camera Scanner" role="STAFF" />} />
-        <Route path="/staff/manual-checkin" element={<PlaceholderSlate title="Manual AP Number Check-In" role="STAFF" />} />
-        <Route path="/staff/session-roster" element={<PlaceholderSlate title="Live Session Roster" role="STAFF" />} />
+        {/* Protected Student Portal */}
+        <Route element={<ProtectedRoute allowedRoles={['STUDENT']} />}>
+          <Route path="/onboarding" element={<StudentOnboardingPage />} />
+          <Route path="/student/dashboard" element={<PlaceholderSlate title="Student Dashboard" role="STUDENT" />} />
+          <Route path="/student/qr-code" element={<PlaceholderSlate title="Student QR Code" role="STUDENT" />} />
+          <Route path="/student/slots" element={<PlaceholderSlate title="Browse Eligible Slots" role="STUDENT" />} />
+          <Route path="/student/transfer" element={<PlaceholderSlate title="Protected Slot Transfer Engine" role="STUDENT" />} />
+          <Route path="/student/attendance" element={<PlaceholderSlate title="Attendance History & Absence Risk" role="STUDENT" />} />
+          <Route path="/student/complaints" element={<PlaceholderSlate title="Student Support Tickets" role="STUDENT" />} />
+        </Route>
 
-        {/* Sports Admin Portal */}
-        <Route path="/admin/dashboard" element={<PlaceholderSlate title="Sports Admin Dashboard" role="ADMIN" />} />
-        <Route path="/admin/facilities" element={<PlaceholderSlate title="Gym Facilities & Recurrence Schedules" role="ADMIN" />} />
-        <Route path="/admin/windows" element={<PlaceholderSlate title="Registration Windows" role="ADMIN" />} />
-        <Route path="/admin/transfers" element={<PlaceholderSlate title="Transfer Requests Review" role="ADMIN" />} />
-        <Route path="/admin/attendance" element={<PlaceholderSlate title="Attendance Audit & Correction Center" role="ADMIN" />} />
-        <Route path="/admin/absence" element={<PlaceholderSlate title="Absence Monitoring & Allocation Management" role="ADMIN" />} />
-        <Route path="/admin/complaints" element={<PlaceholderSlate title="Complaints Management Desk" role="ADMIN" />} />
-        <Route path="/admin/imports" element={<PlaceholderSlate title="Bulk Excel / CSV Import Hub" role="ADMIN" />} />
-        <Route path="/admin/reports" element={<PlaceholderSlate title="Compliance Analytics & Reports Export" role="ADMIN" />} />
+        {/* Protected Gym Staff Scanner Portal */}
+        <Route element={<ProtectedRoute allowedRoles={['STAFF', 'TRAINER']} />}>
+          <Route path="/staff/scanner" element={<PlaceholderSlate title="Turnstile Camera Scanner" role="STAFF" />} />
+          <Route path="/staff/manual-checkin" element={<PlaceholderSlate title="Manual AP Number Check-In" role="STAFF" />} />
+          <Route path="/staff/session-roster" element={<PlaceholderSlate title="Live Session Roster" role="STAFF" />} />
+        </Route>
 
-        {/* Super Admin */}
-        <Route path="/super-admin/staff" element={<PlaceholderSlate title="Staff Provisioning & Role Delegation" role="SUPER_ADMIN" />} />
-        <Route path="/super-admin/settings" element={<PlaceholderSlate title="System Settings & Domain Rules" role="SUPER_ADMIN" />} />
-        <Route path="/super-admin/audit" element={<PlaceholderSlate title="Immutable Audit Trail Inspector" role="SUPER_ADMIN" />} />
+        {/* Protected Sports Admin Portal */}
+        <Route element={<ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']} />}>
+          <Route path="/admin/dashboard" element={<PlaceholderSlate title="Sports Admin Dashboard" role="ADMIN" />} />
+          <Route path="/admin/facilities" element={<PlaceholderSlate title="Gym Facilities & Recurrence Schedules" role="ADMIN" />} />
+          <Route path="/admin/windows" element={<PlaceholderSlate title="Registration Windows" role="ADMIN" />} />
+          <Route path="/admin/transfers" element={<PlaceholderSlate title="Transfer Requests Review" role="ADMIN" />} />
+          <Route path="/admin/attendance" element={<PlaceholderSlate title="Attendance Audit & Correction Center" role="ADMIN" />} />
+          <Route path="/admin/absence" element={<PlaceholderSlate title="Absence Monitoring & Allocation Management" role="ADMIN" />} />
+          <Route path="/admin/complaints" element={<PlaceholderSlate title="Complaints Management Desk" role="ADMIN" />} />
+          <Route path="/admin/imports" element={<PlaceholderSlate title="Bulk Excel / CSV Import Hub" role="ADMIN" />} />
+          <Route path="/admin/reports" element={<PlaceholderSlate title="Compliance Analytics & Reports Export" role="ADMIN" />} />
+        </Route>
+
+        {/* Protected Super Admin */}
+        <Route element={<ProtectedRoute allowedRoles={['SUPER_ADMIN']} />}>
+          <Route path="/super-admin/staff" element={<PlaceholderSlate title="Staff Provisioning & Role Delegation" role="SUPER_ADMIN" />} />
+          <Route path="/super-admin/settings" element={<PlaceholderSlate title="System Settings & Domain Rules" role="SUPER_ADMIN" />} />
+          <Route path="/super-admin/audit" element={<PlaceholderSlate title="Immutable Audit Trail Inspector" role="SUPER_ADMIN" />} />
+        </Route>
 
         {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
@@ -48,8 +63,114 @@ export default function App() {
 }
 
 function HomePortalNavigator() {
+  const { user, isAuthenticated, logout, devSwitchRole } = useAuthStore();
+
   return (
     <div className="wrap" style={{ paddingBlock: '3rem' }}>
+      {/* Top Session Ribbon */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          padding: '0.85rem 1.25rem',
+          backgroundColor: 'var(--surface)',
+          border: '2px solid var(--ink)',
+          boxShadow: 'var(--shadow-offset)',
+          marginBottom: '2.5rem',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <Shield size={20} color="var(--accent)" />
+          {isAuthenticated && user ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>Signed in as:</span>
+              <strong style={{ fontSize: '0.95rem', color: 'var(--ink)' }}>{user.full_name}</strong>
+              <Badge status={user.role === 'STUDENT' ? 'ACTIVE' : 'NEUTRAL'} size="sm">
+                {user.role}
+              </Badge>
+            </div>
+          ) : (
+            <div>
+              <span style={{ fontSize: '0.9rem', color: 'var(--muted)' }}>
+                Session State: <strong>Guest (Unauthenticated)</strong>
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+          {isAuthenticated ? (
+            <Button
+              variant="outline"
+              size="sm"
+              leftIcon={<LogOut size={14} />}
+              onClick={() => logout()}
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <Link to="/login" style={{ textDecoration: 'none' }}>
+              <Button variant="primary" size="sm" leftIcon={<LogIn size={14} />}>
+                Sign In with SRM-AP Account
+              </Button>
+            </Link>
+          )}
+
+          {/* Quick RBAC Tester */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginLeft: '0.5rem' }}>
+            <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)' }}>
+              Switch:
+            </span>
+            <button
+              onClick={() => devSwitchRole('STUDENT')}
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.2rem 0.5rem',
+                backgroundColor: user?.role === 'STUDENT' ? 'var(--accent)' : 'var(--surface-tint)',
+                color: user?.role === 'STUDENT' ? '#fff' : 'var(--ink)',
+                border: '1px solid var(--ink)',
+                cursor: 'pointer',
+                fontWeight: 600,
+              }}
+            >
+              Student
+            </button>
+            <button
+              onClick={() => devSwitchRole('STAFF')}
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.2rem 0.5rem',
+                backgroundColor: user?.role === 'STAFF' ? 'var(--accent)' : 'var(--surface-tint)',
+                color: user?.role === 'STAFF' ? '#fff' : 'var(--ink)',
+                border: '1px solid var(--ink)',
+                cursor: 'pointer',
+                fontWeight: 600,
+              }}
+            >
+              Staff
+            </button>
+            <button
+              onClick={() => devSwitchRole('ADMIN')}
+              style={{
+                fontSize: '0.75rem',
+                padding: '0.2rem 0.5rem',
+                backgroundColor: user?.role === 'ADMIN' ? 'var(--accent)' : 'var(--surface-tint)',
+                color: user?.role === 'ADMIN' ? '#fff' : 'var(--ink)',
+                border: '1px solid var(--ink)',
+                cursor: 'pointer',
+                fontWeight: 600,
+              }}
+            >
+              Admin
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Header */}
       <header style={{ marginBottom: '2.5rem', borderBottom: '2px solid var(--surface-dark)', paddingBottom: '1.5rem' }}>
         <span className="small" style={{ textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--muted)' }}>
           SRM University-AP · Sports Department
@@ -59,51 +180,68 @@ function HomePortalNavigator() {
           Official gym slot allocation, student QR pass, and attendance management portal.
         </p>
 
-        {/* Phase 1 Verification Callout */}
-        <div
-          style={{
-            marginTop: '1.5rem',
-            padding: '1rem 1.25rem',
-            backgroundColor: 'var(--accent-light, #d8e5df)',
-            border: '2px solid var(--accent)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '1rem',
-          }}
-        >
-          <div>
-            <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '1.05rem' }}>
-              Phase 1 Deliverables Ready for Review:
-            </strong>
-            <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.9rem', color: 'var(--ink)' }}>
-              Inspect Button variants, tactile press, Input focus rings, Status Badges, FolderTabs, Modal, and PerforatedSlip.
-            </p>
-          </div>
-          <Link
-            to="/components"
+        {/* Phase 1 & 2 Callouts */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', marginTop: '1.5rem' }}>
+          <div
             style={{
-              padding: '0.55rem 1.2rem',
-              backgroundColor: 'var(--accent)',
-              color: 'var(--accent-ink)',
-              fontWeight: 600,
-              fontSize: '0.925rem',
+              padding: '1rem 1.25rem',
+              backgroundColor: 'var(--surface)',
               border: '2px solid var(--ink)',
               boxShadow: 'var(--shadow-offset)',
-              display: 'inline-flex',
+              display: 'flex',
               alignItems: 'center',
-              gap: '0.4rem',
+              justifyContent: 'space-between',
+              gap: '1rem',
             }}
           >
-            Launch Component Showcase →
-          </Link>
+            <div>
+              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '1rem' }}>
+                Phase 1: Component Primitives
+              </strong>
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: 'var(--muted)' }}>
+                Inspect buttons, inputs, status badges, tabs, and perforated slips.
+              </p>
+            </div>
+            <Link to="/components">
+              <Button variant="outline" size="sm">
+                Showcase →
+              </Button>
+            </Link>
+          </div>
+
+          <div
+            style={{
+              padding: '1rem 1.25rem',
+              backgroundColor: 'var(--accent-light, #d8e5df)',
+              border: '2px solid var(--accent)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '1rem',
+            }}
+          >
+            <div>
+              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '1rem' }}>
+                Phase 2: Auth & Role Gates (RBAC)
+              </strong>
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: 'var(--ink)' }}>
+                Active role guards protect Student, Staff, and Admin portals.
+              </p>
+            </div>
+            <Link to="/login">
+              <Button variant="primary" size="sm">
+                Login / SSO →
+              </Button>
+            </Link>
+          </div>
         </div>
       </header>
 
+      {/* Role Portal Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
         <PortalCard
           title="Student Portal"
+          badge="Role: STUDENT"
           desc="Access your scheduled slot, view your QR code for turnstile check-in, browse open batches, or apply for transfers."
           links={[
             { label: 'Student Dashboard', to: '/student/dashboard' },
@@ -117,6 +255,7 @@ function HomePortalNavigator() {
 
         <PortalCard
           title="Gym Staff Scanner"
+          badge="Role: STAFF / TRAINER"
           desc="Camera scanner for turnstile desk verification, attendance marking, duplicate guard, and manual AP lookup."
           links={[
             { label: 'Turnstile QR Scanner', to: '/staff/scanner' },
@@ -127,6 +266,7 @@ function HomePortalNavigator() {
 
         <PortalCard
           title="Sports Administration"
+          badge="Role: ADMIN"
           desc="Facility configuration, registration windows, transfer triage, attendance audit & correction, and absence monitoring."
           links={[
             { label: 'Admin Dashboard', to: '/admin/dashboard' },
@@ -143,6 +283,7 @@ function HomePortalNavigator() {
 
         <PortalCard
           title="System Administration"
+          badge="Role: SUPER_ADMIN"
           desc="Super Admin control center for staff provisioning, college email domain rules, and immutable audit logs."
           links={[
             { label: 'Staff Provisioning', to: '/super-admin/staff' },
@@ -161,27 +302,59 @@ function HomePortalNavigator() {
   );
 }
 
-function PortalCard({ title, desc, links }: { title: string; desc: string; links: { label: string; to: string }[] }) {
+function PortalCard({
+  title,
+  badge,
+  desc,
+  links,
+}: {
+  title: string;
+  badge: string;
+  desc: string;
+  links: { label: string; to: string }[];
+}) {
   return (
-    <div style={{ background: 'var(--surface)', padding: '1.8rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <h2 style={{ fontSize: '1.35rem', color: 'var(--ink)' }}>{title}</h2>
-      <p style={{ fontSize: '0.95rem', color: 'var(--muted)', lineHeight: '1.45' }}>{desc}</p>
-      <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto' }}>
+    <div
+      style={{
+        background: 'var(--surface)',
+        border: '2px solid var(--ink)',
+        boxShadow: 'var(--shadow-offset)',
+        padding: '1.8rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.85rem',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <h2 style={{ fontSize: '1.3rem', color: 'var(--ink)', margin: 0 }}>{title}</h2>
+        <span style={{ fontSize: '0.72rem', fontFamily: 'var(--font-mono)', color: 'var(--muted)', backgroundColor: 'var(--surface-tint)', padding: '0.15rem 0.4rem', border: '1px solid var(--ink)' }}>
+          {badge}
+        </span>
+      </div>
+
+      <p style={{ fontSize: '0.925rem', color: 'var(--muted)', lineHeight: '1.45', margin: 0 }}>{desc}</p>
+
+      <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', marginTop: 'auto', paddingTop: '0.75rem' }}>
         {links.map((link) => (
           <li key={link.to}>
             <Link
               to={link.to}
               style={{
-                display: 'inline-block',
-                padding: '0.4rem 0.8rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '0.45rem 0.85rem',
                 background: 'var(--bg)',
+                border: '1px solid var(--ink)',
                 color: 'var(--ink)',
-                fontSize: '0.9rem',
-                fontWeight: 500,
+                fontSize: '0.875rem',
+                fontWeight: 600,
                 textDecoration: 'none',
+                transition: 'background var(--t-hover)',
               }}
             >
-              → {link.label}
+              <span>{link.label}</span>
+              <ArrowRight size={14} color="var(--accent)" />
             </Link>
           </li>
         ))}
@@ -191,33 +364,45 @@ function PortalCard({ title, desc, links }: { title: string; desc: string; links
 }
 
 function PlaceholderSlate({ title, role }: { title: string; role: string }) {
+  const { user } = useAuthStore();
+
   return (
     <div className="wrap" style={{ paddingBlock: '4rem' }}>
       <Link to="/" style={{ color: 'var(--accent)', textDecoration: 'underline', marginBottom: '1.5rem', display: 'inline-block' }}>
         ← Return to Portal Hub
       </Link>
-      <div style={{ background: 'var(--surface)', padding: '2.5rem', maxWidth: '800px' }}>
-        <span style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--muted)' }}>
-          {role} ROLE SCREEN
-        </span>
-        <h1 className="head" style={{ marginBlock: '0.8rem', color: 'var(--ink)' }}>{title}</h1>
-        <p style={{ color: 'var(--muted)', marginBottom: '2rem' }}>
-          This screen is scaffolded and ready for feature implementation per the Phase specifications in <code>frontend/docs/frontend-implementation-plan.md</code>.
+      <div
+        style={{
+          background: 'var(--surface)',
+          border: '3px solid var(--ink)',
+          boxShadow: 'var(--shadow-lift, 6px 6px 0px var(--ink))',
+          padding: '2.5rem',
+          maxWidth: '800px',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.8rem' }}>
+          <Badge status="ACTIVE" size="sm">
+            {role} AUTHORIZED
+          </Badge>
+          <span style={{ fontSize: '0.85rem', color: 'var(--muted)', fontFamily: 'var(--font-mono)' }}>
+            User: {user?.full_name} ({user?.email})
+          </span>
+        </div>
+
+        <h1 className="head" style={{ marginBlock: '0.5rem', color: 'var(--ink)' }}>{title}</h1>
+        <p style={{ color: 'var(--muted)', marginBottom: '1.75rem', fontSize: '1.05rem' }}>
+          This screen is authenticated and protected by React Router v6 RBAC guards. Implementation continues per the specifications in <code>frontend/docs/frontend-implementation-plan.md</code>.
         </p>
-        <div style={{ padding: '1rem', background: 'var(--bg)', borderLeft: '4px solid var(--accent)' }}>
-          <span className="nums" style={{ fontSize: '0.9rem' }}>Status: Scaffolded · React Router v6 Active</span>
+
+        <div style={{ padding: '1rem', background: 'var(--bg)', borderLeft: '4px solid var(--accent)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <UserCheck size={18} color="var(--accent)" />
+          <span className="nums" style={{ fontSize: '0.9rem', fontWeight: 600 }}>
+            Session Active · Role: {user?.role} · Protected Route Verified
+          </span>
         </div>
       </div>
     </div>
   );
-}
-
-function LoginPage() {
-  return <PlaceholderSlate title="Google OAuth 2.0 Sign-In" role="PUBLIC" />;
-}
-
-function AuthCallbackPage() {
-  return <PlaceholderSlate title="OAuth 2.0 Callback & Token Exchange" role="PUBLIC" />;
 }
 
 function StudentOnboardingPage() {
