@@ -7,6 +7,8 @@ import { Onboarding } from './pages/student/Onboarding';
 import { QRCodePage } from './pages/student/QRCodePage';
 import { SlotBrowserPage } from './pages/student/SlotBrowserPage';
 import { SlotTransferPage } from './pages/student/SlotTransferPage';
+import { AttendancePage } from './pages/student/AttendancePage';
+import { ComplaintsPage } from './pages/student/ComplaintsPage';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { useAuthStore } from './stores/useAuthStore';
 import { Badge, Button } from './components/ui';
@@ -30,8 +32,8 @@ export default function App() {
           <Route path="/student/qr-code" element={<QRCodePage />} />
           <Route path="/student/slots" element={<SlotBrowserPage />} />
           <Route path="/student/transfer" element={<SlotTransferPage />} />
-          <Route path="/student/attendance" element={<PlaceholderSlate title="Attendance History & Absence Risk" role="STUDENT" />} />
-          <Route path="/student/complaints" element={<PlaceholderSlate title="Student Support Tickets" role="STUDENT" />} />
+          <Route path="/student/attendance" element={<AttendancePage />} />
+          <Route path="/student/complaints" element={<ComplaintsPage />} />
         </Route>
 
         {/* Protected Gym Staff Scanner Portal */}
@@ -306,8 +308,9 @@ function HomePortalNavigator() {
           <div
             style={{
               padding: '1rem 1.25rem',
-              backgroundColor: 'var(--accent-light, #d8e5df)',
-              border: '2px solid var(--accent)',
+              backgroundColor: 'var(--surface)',
+              border: '2px solid var(--ink)',
+              boxShadow: 'var(--shadow-offset)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -318,19 +321,52 @@ function HomePortalNavigator() {
               <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '0.95rem' }}>
                 Phase 5: Slot Browser & Transfers
               </strong>
-              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--ink)' }}>
-                Occupancy gauges, waitlists & protected swaps.
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--muted)' }}>
+                Occupancy gauges, waitlists & swaps.
               </p>
             </div>
             <div style={{ display: 'flex', gap: '0.35rem' }}>
               <Link to="/student/slots">
-                <Button variant="primary" size="sm">
+                <Button variant="outline" size="sm">
                   Slots →
                 </Button>
               </Link>
               <Link to="/student/transfer">
-                <Button variant="secondary" size="sm">
+                <Button variant="outline" size="sm">
                   Transfer →
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          <div
+            style={{
+              padding: '1rem 1.25rem',
+              backgroundColor: 'var(--accent-light, #d8e5df)',
+              border: '2px solid var(--accent)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '0.75rem',
+            }}
+          >
+            <div>
+              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '0.95rem' }}>
+                Phase 6: Attendance & Support
+              </strong>
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--ink)' }}>
+                Absence barometer & grievance desk.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '0.35rem' }}>
+              <Link to="/student/attendance">
+                <Button variant="primary" size="sm">
+                  Attendance →
+                </Button>
+              </Link>
+              <Link to="/student/complaints">
+                <Button variant="secondary" size="sm">
+                  Tickets →
                 </Button>
               </Link>
             </div>
