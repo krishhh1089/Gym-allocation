@@ -344,7 +344,7 @@ graph TD
 
 
 
-**## 📷 Phase 7: Gym Staff QR Scanner App**
+**## 📷 Phase 7: Gym Staff QR Scanner App [COMPLETED]**
 
 **### Step 7.1 — Camera QR Scanner (\`html5-qrcode\`)**
 

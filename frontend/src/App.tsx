@@ -9,6 +9,9 @@ import { SlotBrowserPage } from './pages/student/SlotBrowserPage';
 import { SlotTransferPage } from './pages/student/SlotTransferPage';
 import { AttendancePage } from './pages/student/AttendancePage';
 import { ComplaintsPage } from './pages/student/ComplaintsPage';
+import { QRScannerPage } from './pages/staff/QRScannerPage';
+import { ManualCheckInPage } from './pages/staff/ManualCheckInPage';
+import { SessionRosterPage } from './pages/staff/SessionRosterPage';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { useAuthStore } from './stores/useAuthStore';
 import { Badge, Button } from './components/ui';
@@ -37,10 +40,10 @@ export default function App() {
         </Route>
 
         {/* Protected Gym Staff Scanner Portal */}
-        <Route element={<ProtectedRoute allowedRoles={['STAFF', 'TRAINER']} />}>
-          <Route path="/staff/scanner" element={<PlaceholderSlate title="Turnstile Camera Scanner" role="STAFF" />} />
-          <Route path="/staff/manual-checkin" element={<PlaceholderSlate title="Manual AP Number Check-In" role="STAFF" />} />
-          <Route path="/staff/session-roster" element={<PlaceholderSlate title="Live Session Roster" role="STAFF" />} />
+        <Route element={<ProtectedRoute allowedRoles={['STAFF', 'TRAINER', 'ADMIN', 'SUPER_ADMIN']} />}>
+          <Route path="/staff/scanner" element={<QRScannerPage />} />
+          <Route path="/staff/manual-checkin" element={<ManualCheckInPage />} />
+          <Route path="/staff/session-roster" element={<SessionRosterPage />} />
         </Route>
 
         {/* Protected Sports Admin Portal */}
@@ -367,6 +370,45 @@ function HomePortalNavigator() {
               <Link to="/student/complaints">
                 <Button variant="secondary" size="sm">
                   Tickets →
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          <div
+            style={{
+              padding: '1rem 1.25rem',
+              backgroundColor: 'var(--surface)',
+              border: '2px solid var(--ink)',
+              boxShadow: 'var(--shadow-offset)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '0.75rem',
+            }}
+          >
+            <div>
+              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '0.95rem' }}>
+                Phase 7: Staff Turnstile Scanner
+              </strong>
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--muted)' }}>
+                Optical scanner, manual lookup & live roster.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '0.35rem' }}>
+              <Link to="/staff/scanner">
+                <Button variant="primary" size="sm">
+                  Scanner →
+                </Button>
+              </Link>
+              <Link to="/staff/manual-checkin">
+                <Button variant="outline" size="sm">
+                  Lookup →
+                </Button>
+              </Link>
+              <Link to="/staff/session-roster">
+                <Button variant="outline" size="sm">
+                  Roster →
                 </Button>
               </Link>
             </div>
