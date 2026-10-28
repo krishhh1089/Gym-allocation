@@ -95,6 +95,17 @@ class RoleRepository:
         result = await self._session.execute(select(Role).order_by(Role.name))
         return list(result.scalars().all())
 
+    async def get_user_role(
+        self, user_id: uuid.UUID, role_id: uuid.UUID
+    ) -> Optional[UserRole]:
+        result = await self._session.execute(
+            select(UserRole).where(
+                UserRole.user_id == user_id,
+                UserRole.role_id == role_id,
+            )
+        )
+        return result.scalar_one_or_none()
+
     async def assign_role(self, user_role: UserRole) -> UserRole:
         self._session.add(user_role)
         await self._session.flush()
