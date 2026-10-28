@@ -106,75 +106,42 @@ graph TD
 
 
 
-**## 🎨 Phase 1: Design System Tokens & Base Primitives**
+**## 🎨 Phase 1: Design System Tokens & Base Primitives** *(Completed & Verified)*
 
+### Step 1.1 — CSS Token System & Typography Engine `[COMPLETED]`
+- **Action:** Implement global token foundation from [`02-design-system.md`](02-design-system.md) in `src/styles/tokens.css` and `src/styles/globals.css`.
+- **Tokens Included:**
+  - Warm stone ground (`--bg: #eeecea`), ledger surface (`--surface: #e4e1dd`), paper card (`--card-paper: #e8e5e0`).
+  - SRM-AP collegiate athletic forest green (`--accent: #2e4a3e`).
+  - Status accents (`--status-present`, `--status-absent`, `--status-late`, `--status-waitlist`, `--status-pending`, `--status-reclaimed`).
+  - Fluid typography clamp scale (`--step-small` to `--step-display`) in `Zilla Slab`.
+  - Tabular figure utility (`.nums` / `font-variant-numeric: tabular-nums`).
+- **Files Created/Refined:**
+  - `src/styles/tokens.css`
+  - `src/styles/globals.css`
 
-
-**### Step 1.1 — CSS Token System & Typography Engine**
-
-\- **\*\*Action:\*\*** Implement global token foundation from [\`02-design-system.md\`]\(02-design-system.md) in \`src/styles/tokens.css\` and \`src/styles/globals.css\`.
-
-\- **\*\*Tokens Included:\*\***
-
-  - Warm stone ground (\`--bg: #eeecea\`), ledger surface (\`--surface: #e4e1dd\`), paper card (\`--card-paper: #e8e5e0\`).
-
-  - SRM-AP collegiate athletic forest green (\`--accent: #2e4a3e\`).
-
-  - Status accents (\`--status-present\`, \`--status-absent\`, \`--status-late\`, \`--status-waitlist\`).
-
-  - Fluid typography clamp scale (\`--step-small\` to \`--step-display\`) in \`Zilla Slab\`.
-
-  - Tabular figure utility (\`.nums\` / \`font-variant-numeric: tabular-nums\`).
-
-\- **\*\*Files to Create:\*\***
-
-  - \`src/styles/tokens.css\`
-
-  - \`src/styles/reset.css\`
-
-  - \`src/styles/globals.css\`
-
-
-
-**### Step 1.2 — Atomic Component Primitives**
-
-\- **\*\*Action:\*\*** Build reusable anti-slop atomic components without generic borders or floating shadows.
-
-\- **\*\*Components to Build:\*\***
-
-  - \`Button\` (Primary athletic green, secondary paper tint, disabled/loading state).
-
-  - \`Input\` / \`Select\` / \`Textarea\` (Tactile focus ring, error message, high-contrast text).
-
-  - \`BadgePill\` (Square-cornered status tag for \`PRESENT\`, \`ABSENT\`, \`ACTIVE\`, \`WAITLISTED\`).
-
-  - \`FolderTabs\` (Physical filing tab strip with active sheet coupling).
-
-  - \`Modal\` (\`data-ui\` scoped dialog with backdrop scrim and escape key dismissal).
-
-  - \`PerforatedSlip\` (Container with zigzag tear-away edge for timetables and tickets).
-
-\- **\*\*Files to Create:\*\***
-
-  - \`src/components/ui/Button.tsx\`
-
-  - \`src/components/ui/Input.tsx\`
-
-  - \`src/components/ui/Badge.tsx\`
-
-  - \`src/components/ui/FolderTabs.tsx\`
-
-  - \`src/components/ui/Modal.tsx\`
-
-  - \`src/components/ui/PerforatedSlip.tsx\`
-
-\- 🔍 **\*\*User Verification Checkpoint 1:\*\***
-
-  - Review component story/test page rendering buttons, badges, tabs, and perforated slips.
-
-  - Test keyboard focus rings (\`Tab\` key navigates with 3px solid \`--accent\` indicator).
-
-  - Check WCAG contrast with DevTools (all text passes 7:1+ contrast).
+### Step 1.2 — Atomic Component Primitives `[COMPLETED]`
+- **Action:** Build reusable anti-slop atomic components without generic borders or floating shadows.
+- **Components Built:**
+  - `Button` (Primary athletic green `#2e4a3e`, secondary paper tint `#cdc3b6`, danger `#9e2a2b`, outline, ghost, loading/disabled state, active `translate(2px, 2px)`).
+  - `Input` (Tactile 3px focus ring, error message, high-contrast text, monospace AP formatting).
+  - `Badge` (Square-cornered status tag for `PRESENT`, `ABSENT`, `ACTIVE`, `WAITLISTED`, `PENDING`, `RECLAIMED`, `CANCELLED`).
+  - `FolderTabs` (Physical filing tab strip with active sheet coupling, keyboard arrow navigation, badges).
+  - `Modal` (`data-ui` scoped dialog with backdrop scrim, keyboard escape dismissal, accessible dialog).
+  - `PerforatedSlip` (Container with circular edge punch-outs, dashed tear line, ticket stub).
+- **Files Created:**
+  - `src/components/ui/Button.tsx`
+  - `src/components/ui/Input.tsx`
+  - `src/components/ui/Badge.tsx`
+  - `src/components/ui/FolderTabs.tsx`
+  - `src/components/ui/Modal.tsx`
+  - `src/components/ui/PerforatedSlip.tsx`
+  - `src/components/ui/index.ts`
+  - `src/pages/public/ComponentShowcase.tsx` (Interactive test suite at `/components`)
+- 🔍 **User Verification Checkpoint 1:** `[VERIFIED]`
+  - Review component story/test page rendering buttons, badges, tabs, and perforated slips at `http://localhost:5173/components`.
+  - Test keyboard focus rings (`Tab` key navigates with 3px solid `--accent` indicator).
+  - Check WCAG contrast with DevTools (all text passes 7:1+ contrast). Verified in live browser.
 
 
 

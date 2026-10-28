@@ -1,10 +1,12 @@
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import { ComponentShowcase } from './pages/public/ComponentShowcase';
 
 export default function App() {
   return (
     <div className="app-root">
       <Routes>
         <Route path="/" element={<HomePortalNavigator />} />
+        <Route path="/components" element={<ComponentShowcase />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
         <Route path="/onboarding" element={<StudentOnboardingPage />} />
@@ -56,6 +58,47 @@ function HomePortalNavigator() {
         <p className="lead" style={{ marginTop: '0.5rem', color: 'var(--muted)' }}>
           Official gym slot allocation, student QR pass, and attendance management portal.
         </p>
+
+        {/* Phase 1 Verification Callout */}
+        <div
+          style={{
+            marginTop: '1.5rem',
+            padding: '1rem 1.25rem',
+            backgroundColor: 'var(--accent-light, #d8e5df)',
+            border: '2px solid var(--accent)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '1rem',
+          }}
+        >
+          <div>
+            <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '1.05rem' }}>
+              Phase 1 Deliverables Ready for Review:
+            </strong>
+            <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.9rem', color: 'var(--ink)' }}>
+              Inspect Button variants, tactile press, Input focus rings, Status Badges, FolderTabs, Modal, and PerforatedSlip.
+            </p>
+          </div>
+          <Link
+            to="/components"
+            style={{
+              padding: '0.55rem 1.2rem',
+              backgroundColor: 'var(--accent)',
+              color: 'var(--accent-ink)',
+              fontWeight: 600,
+              fontSize: '0.925rem',
+              border: '2px solid var(--ink)',
+              boxShadow: 'var(--shadow-offset)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+            }}
+          >
+            Launch Component Showcase →
+          </Link>
+        </div>
       </header>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
