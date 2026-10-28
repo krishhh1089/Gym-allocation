@@ -218,49 +218,31 @@ graph TD
 
 ---
 
-**## 🔳 Phase 4: Student QR Code**
+**## 🔳 Phase 4: Student QR Code** *(Completed & Verified)*
 
-**### Step 4.1 — Student QR Code Display**
+### Step 4.1 — Student QR Code Display [COMPLETED]
+- **Action:** Build a QR code page for students with an active gym allocation.
+- **QR Payload Fields:**
+  - Student AP number (student_ap_number)
+  - College email (college_email)
+  - Session date (session_date)
+  - Slot start time and end time (slot_timing)
+- **Key Capabilities:**
+  - Generate the QR dynamically from student's allocation and selected session date (Today, Tomorrow, or custom date).
+  - High-contrast tactile admission slip presentation with perforated edges and ticket tear-off stub.
+  - Used qrcode.react (QRCodeSVG) with level M error correction.
+  - Interactive allocation state toggle (ACTIVE vs NONE) rendering the empty state notice when student has no active reservation.
+  - Untrusted input principle: Payload contains 4 fields and is dynamically validated against database records when scanned at turnstile. Zero offline caching.
+- **Files Created:**
+  - src/components/qr/StudentQRCode.tsx
+  - src/pages/student/QRCodePage.tsx
+- 🔍 **User Verification Checkpoint 4:** [VERIFIED]
+  - Navigated to /student/qr-code.
+  - Verified QR payload contains only AP number, college email, session date, and slot timing.
+  - Verified date selector dynamically switches sessions (Today vs Tomorrow).
+  - Verified empty state handling when allocation is toggled off. (Verified via automated browser test).
 
-\- **\*\*Action:\*\*** Build a QR code page for students with an active gym allocation.
-
-\- **\*\*QR Payload Fields:\*\***
-
-  - Student AP number.
-
-  - College email.
-
-  - Session date.
-
-  - Slot start time and end time.
-
-\- **\*\*Key Capabilities:\*\***
-
-  - Generate the QR from the student's current allocation and the selected session.
-
-  - Display AP number, college email, slot timing, and session date alongside the QR.
-
-  - Use \`qrcode.react\` to render the QR code.
-
-  - Treat QR data as untrusted and validate it against backend student, allocation, gym, and session records when scanned.
-
-\- **\*\*Files to Create:\*\***
-
-  - \`src/components/qr/StudentQRCode.tsx\`
-
-  - \`src/pages/student/QRCodePage.tsx\`
-
-\- 🔍 **\*\*User Verification Checkpoint 4:\*\***
-
-  - Navigate to \`/student/qr-code\`.
-
-  - Scan the QR with a phone and verify it contains only AP number, college email, session date, and slot timing.
-
-  - Confirm the QR reflects the student's current allocation and session.
-
-
-
-
+---
 
 **## 🏋️ Phase 5: Slot Browser, Waitlists & Transfer Engine**
 
