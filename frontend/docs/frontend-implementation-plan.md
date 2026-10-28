@@ -244,65 +244,39 @@ graph TD
 
 ---
 
-**## 🏋️ Phase 5: Slot Browser, Waitlists & Transfer Engine**
+**## 🏋️ Phase 5: Slot Browser, Waitlists & Transfer Engine** *(Completed & Verified)*
 
+### Step 5.1 — Facility Slot Browser & Live Capacity Gauges `[COMPLETED]`
+- **Action:** Build facility browser across all 4 SRM-AP gym complexes with real-time occupancy.
+- **Controls & States:**
+  - Tabs: `All Facilities`, `C. V. Raman Gym`, `Ganga Fitness Hub`, `Krishna Conditioning`, `Narmada Strength`.
+  - Batch period filters (`All Batches`, `Morning Only`, `Evening Only`) and `Show Available Slots Only` toggle.
+  - Slot cards with visual progress bar (`CapacityGauge`) showing occupancy and color-coded threshold alerts.
+  - Dynamic button states: `Allocated to You` (disabled), `Apply for Slot Allocation` (when student has no slot), `Request Transfer to Slot` (when student has existing slot), and `Join FCFS Waitlist` (when capacity == 100% full with queue position).
+- **Files Created:**
+  - `src/components/slots/CapacityGauge.tsx`
+  - `src/components/slots/SlotCard.tsx`
+  - `src/pages/student/SlotBrowserPage.tsx`
 
+### Step 5.2 — Protected Slot Transfer Request Engine `[COMPLETED]`
+- **Action:** Build the transfer request workflow allowing students with active slots to apply for a swap without risking their current seat.
+- **Key Features:**
+  - Side-by-side ledger comparing **Current Slot** vs **Target Slot** via `TransferComparisonLedger`.
+  - Prominent Protected Transfer Guarantee banner: *"Your current gym slot remains 100% active and secured. You will not lose your current workout timing unless your transfer is confirmed."*
+  - Reason selector dropdown (`Academic Class Timetable Clash`, `Lab / Project Schedule Changed`, `Hostel Block Relocation`, `Medical / Rehabilitation Goal`, `Sports Team Practice Session`).
+  - Remarks textarea with 250 character limit counter.
+  - Interactive submission state updating to `IN REVIEW` status with ticket reference `#TR-2026-AP0045` and `Withdraw Transfer Request` control.
+- **Files Created:**
+  - `src/components/slots/TransferComparisonLedger.tsx`
+  - `src/pages/student/SlotTransferPage.tsx`
+- 🔍 **User Verification Checkpoint 5:** `[VERIFIED]`
+  - Switched between facility tabs and tested period filters at `/student/slots`.
+  - Tested joining FCFS waitlist modal on full batch M2 at position #8.
+  - Clicked transfer on open batch E1 -> redirected to `/student/transfer`.
+  - Verified Protected Guarantee banner and side-by-side comparison ledger.
+  - Submitted transfer request -> verified `IN REVIEW` card appeared and tested `Withdraw Transfer Request`. (Verified via browser subagent with video recording).
 
-**### Step 5.1 — Facility Slot Browser & Live Capacity Gauges**
-
-\- **\*\*Action:\*\*** Build facility browser across all 4 SRM-AP gym complexes with real-time occupancy.
-
-\- **\*\*Controls & States:\*\***
-
-  - Tabs: \`C. V. Raman\`, \`Ganga\`, \`Krishna\`, \`Narmada\`.
-
-  - Slot cards (06:00 to 20:00 batches) with live progress bar: e.g. \`106 / 120 Allocated\`.
-
-  - Apply / Request Change button (available when capacity > 0 and the student is eligible; students with an active allocation can submit a transfer request).
-
-  - \`Join FCFS Waitlist\` button (active when capacity is full; displays current queue position, e.g. *\*8 in line\**).
-
-\- **\*\*Files to Create:\*\***
-
-  - \`src/pages/student/SlotBrowserPage.tsx\`
-
-  - \`src/components/slots/SlotCard.tsx\`
-
-  - \`src/components/slots/CapacityGauge.tsx\`
-
-
-
-**### Step 5.2 — Protected Slot Transfer Request Engine**
-
-\- **\*\*Action:\*\*** Build the transfer request workflow allowing students with active slots to apply for a swap without risking their current seat.
-
-\- **\*\*Key Features:\*\***
-
-  - Side-by-side ledger comparing **\*\*Current Slot\*\*** vs **\*\*Target Slot\*\***.
-
-  - Protected Transfer Guarantee banner: *\*"Your current slot remains active until transfer is approved."\**
-
-  - Reason selector dropdown (\`Class Clash\`, \`Lab Schedule\`, \`Hostel Move\`, \`Fitness Goal\`).
-
-  - Optimistic submission handling with TanStack Query.
-
-\- **\*\*Files to Create:\*\***
-
-  - \`src/pages/student/SlotTransferPage.tsx\`
-
-  - \`src/components/slots/TransferComparisonLedger.tsx\`
-
-\- 🔍 **\*\*User Verification Checkpoint 5:\*\***
-
-  - Test switching facilities and applying for open vs full slots.
-
-  - Submit a transfer request -> Verify target slot displays \`TRANSFER PENDING\` and current slot remains intact.
-
-
-
-\---
-
-
+---
 
 **## 📅 Phase 6: Attendance History, Absence Risk & Complaints**
 

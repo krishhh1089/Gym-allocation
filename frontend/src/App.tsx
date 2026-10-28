@@ -5,6 +5,8 @@ import { Login } from './pages/auth/Login';
 import { AuthCallback } from './pages/auth/AuthCallback';
 import { Onboarding } from './pages/student/Onboarding';
 import { QRCodePage } from './pages/student/QRCodePage';
+import { SlotBrowserPage } from './pages/student/SlotBrowserPage';
+import { SlotTransferPage } from './pages/student/SlotTransferPage';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { useAuthStore } from './stores/useAuthStore';
 import { Badge, Button } from './components/ui';
@@ -26,8 +28,8 @@ export default function App() {
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/student/dashboard" element={<PlaceholderSlate title="Student Dashboard" role="STUDENT" />} />
           <Route path="/student/qr-code" element={<QRCodePage />} />
-          <Route path="/student/slots" element={<PlaceholderSlate title="Browse Eligible Slots" role="STUDENT" />} />
-          <Route path="/student/transfer" element={<PlaceholderSlate title="Protected Slot Transfer Engine" role="STUDENT" />} />
+          <Route path="/student/slots" element={<SlotBrowserPage />} />
+          <Route path="/student/transfer" element={<SlotTransferPage />} />
           <Route path="/student/attendance" element={<PlaceholderSlate title="Attendance History & Absence Risk" role="STUDENT" />} />
           <Route path="/student/complaints" element={<PlaceholderSlate title="Student Support Tickets" role="STUDENT" />} />
         </Route>
@@ -277,8 +279,9 @@ function HomePortalNavigator() {
           <div
             style={{
               padding: '1rem 1.25rem',
-              backgroundColor: 'var(--accent-light, #d8e5df)',
-              border: '2px solid var(--accent)',
+              backgroundColor: 'var(--surface)',
+              border: '2px solid var(--ink)',
+              boxShadow: 'var(--shadow-offset)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -289,15 +292,48 @@ function HomePortalNavigator() {
               <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '0.95rem' }}>
                 Phase 4: Turnstile QR Pass
               </strong>
-              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--ink)' }}>
-                Dynamic 4-attribute pass & session selector.
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--muted)' }}>
+                4-attribute pass & session selector.
               </p>
             </div>
             <Link to="/student/qr-code">
-              <Button variant="primary" size="sm">
+              <Button variant="outline" size="sm">
                 QR Pass →
               </Button>
             </Link>
+          </div>
+
+          <div
+            style={{
+              padding: '1rem 1.25rem',
+              backgroundColor: 'var(--accent-light, #d8e5df)',
+              border: '2px solid var(--accent)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '0.75rem',
+            }}
+          >
+            <div>
+              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '0.95rem' }}>
+                Phase 5: Slot Browser & Transfers
+              </strong>
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--ink)' }}>
+                Occupancy gauges, waitlists & protected swaps.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '0.35rem' }}>
+              <Link to="/student/slots">
+                <Button variant="primary" size="sm">
+                  Slots →
+                </Button>
+              </Link>
+              <Link to="/student/transfer">
+                <Button variant="secondary" size="sm">
+                  Transfer →
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </header>
