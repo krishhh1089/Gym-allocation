@@ -1,7 +1,9 @@
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { ComponentShowcase } from './pages/public/ComponentShowcase';
+import { LandingPage } from './pages/public/LandingPage';
 import { Login } from './pages/auth/Login';
 import { AuthCallback } from './pages/auth/AuthCallback';
+import { Onboarding } from './pages/student/Onboarding';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { useAuthStore } from './stores/useAuthStore';
 import { Badge, Button } from './components/ui';
@@ -13,13 +15,14 @@ export default function App() {
       <Routes>
         {/* Public & Verification Routes */}
         <Route path="/" element={<HomePortalNavigator />} />
+        <Route path="/landing" element={<LandingPage />} />
         <Route path="/components" element={<ComponentShowcase />} />
         <Route path="/login" element={<Login />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
 
         {/* Protected Student Portal */}
         <Route element={<ProtectedRoute allowedRoles={['STUDENT']} />}>
-          <Route path="/onboarding" element={<StudentOnboardingPage />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/student/dashboard" element={<PlaceholderSlate title="Student Dashboard" role="STUDENT" />} />
           <Route path="/student/qr-code" element={<PlaceholderSlate title="Student QR Code" role="STUDENT" />} />
           <Route path="/student/slots" element={<PlaceholderSlate title="Browse Eligible Slots" role="STUDENT" />} />
@@ -180,8 +183,8 @@ function HomePortalNavigator() {
           Official gym slot allocation, student QR pass, and attendance management portal.
         </p>
 
-        {/* Phase 1 & 2 Callouts */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem', marginTop: '1.5rem' }}>
+        {/* Phase Callouts */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '1.5rem' }}>
           <div
             style={{
               padding: '1rem 1.25rem',
@@ -191,15 +194,15 @@ function HomePortalNavigator() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: '1rem',
+              gap: '0.75rem',
             }}
           >
             <div>
-              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '1rem' }}>
-                Phase 1: Component Primitives
+              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '0.95rem' }}>
+                Phase 1: UI Primitives
               </strong>
-              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: 'var(--muted)' }}>
-                Inspect buttons, inputs, status badges, tabs, and perforated slips.
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--muted)' }}>
+                Buttons, inputs, badges, tabs, slips.
               </p>
             </div>
             <Link to="/components">
@@ -212,27 +215,61 @@ function HomePortalNavigator() {
           <div
             style={{
               padding: '1rem 1.25rem',
+              backgroundColor: 'var(--surface)',
+              border: '2px solid var(--ink)',
+              boxShadow: 'var(--shadow-offset)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '0.75rem',
+            }}
+          >
+            <div>
+              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '0.95rem' }}>
+                Phase 2: Auth & RBAC
+              </strong>
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--muted)' }}>
+                Google SSO, session store, 403 gates.
+              </p>
+            </div>
+            <Link to="/login">
+              <Button variant="outline" size="sm">
+                Login / SSO →
+              </Button>
+            </Link>
+          </div>
+
+          <div
+            style={{
+              padding: '1rem 1.25rem',
               backgroundColor: 'var(--accent-light, #d8e5df)',
               border: '2px solid var(--accent)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: '1rem',
+              gap: '0.75rem',
             }}
           >
             <div>
-              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '1rem' }}>
-                Phase 2: Auth & Role Gates (RBAC)
+              <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)', fontSize: '0.95rem' }}>
+                Phase 3: Landing & Onboarding
               </strong>
-              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: 'var(--ink)' }}>
-                Active role guards protect Student, Staff, and Admin portals.
+              <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: 'var(--ink)' }}>
+                Public landing page & student onboarding.
               </p>
             </div>
-            <Link to="/login">
-              <Button variant="primary" size="sm">
-                Login / SSO →
-              </Button>
-            </Link>
+            <div style={{ display: 'flex', gap: '0.35rem' }}>
+              <Link to="/landing">
+                <Button variant="primary" size="sm">
+                  Landing →
+                </Button>
+              </Link>
+              <Link to="/onboarding">
+                <Button variant="secondary" size="sm">
+                  Onboarding →
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </header>
@@ -405,6 +442,3 @@ function PlaceholderSlate({ title, role }: { title: string; role: string }) {
   );
 }
 
-function StudentOnboardingPage() {
-  return <PlaceholderSlate title="Student Profile Onboarding (Verified Details)" role="STUDENT" />;
-}

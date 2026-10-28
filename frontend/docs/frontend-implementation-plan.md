@@ -186,71 +186,37 @@ graph TD
 
 
 
-**## 🏛️ Phase 3: Public Landing Page & Student Onboarding**
+**## 🏛️ Phase 3: Public Landing Page & Student Onboarding** *(Completed & Verified)*
 
+### Step 3.1 — Public Landing Page (React Version) [COMPLETED]
+- **Action:** Port the audited, anti-slop landing page into a modular React component tree.
+- **Sections Included:**
+  - University Masthead with Google OAuth login trigger.
+  - Hero Tabbed Folder with Facility previews (C. V. Raman, Ganga, Krishna, Narmada) using curated photography.
+  - Interactive Simulator component (QRPreviewSimulator) demonstrating the 4-attribute payload.
+  - Four Foundational Safeguards (3-Day absence rule, FCFS queue, dynamic QR, audit precision).
+  - Official Session Timetable with capacity breakdown.
+  - Institutional Footer with open-access athletic archive credits.
+- **Files Created:**
+  - src/pages/public/LandingPage.tsx
+  - src/components/landing/HeroFolder.tsx
+  - src/components/landing/QRPreviewSimulator.tsx
+  - src/components/landing/TimetableCard.tsx
 
+### Step 3.2 — Student Profile Onboarding [COMPLETED]
+- **Action:** Build onboarding screen for first-time students after Google OAuth login.
+- **Displayed Details & Scenarios:**
+  - Read-only AP number (AP22110010045), name, and college email from verified student record.
+  - Active gym allocation scenario with official admission slip pass and timetable details.
+  - No active allocation scenario with upcoming registration window notice and browse slots CTA.
+  - Unmatched roster scenario with database exception alert and Sports Department office resolution steps.
+- **Files Created:**
+  - src/pages/student/Onboarding.tsx
+- 🔍 **User Verification Checkpoint 3:** [VERIFIED]
+  - Opened landing page at http://localhost:5173/landing -> Tested facility tabs, photos, and interactive QR simulator.
+  - Tested /onboarding across all 3 scenarios (Active allocation, No allocation, Unmatched roster). (Verified via browser subagent with video recording).
 
-**### Step 3.1 — Public Landing Page (React Version)**
-
-\- **\*\*Action:\*\*** Port the audited, anti-slop landing page from \`frontend/web/\` into a modular React component tree.
-
-\- **\*\*Sections Included:\*\***
-
-  - University Masthead with Google OAuth login trigger.
-
-  - Hero Tabbed Folder with Facility previews (C. V. Raman, Ganga, Krishna, Narmada).
-
-  - Interactive Simulator component (\`#simulator\`).
-
-  - Gym slot and attendance information section.
-
-  - Four Foundational Safeguards.
-
-  - Official Session Timetable.
-
-  - FAQ Accordion & Reply Card CTA.
-
-  - Institutional Footer with Creative Commons image credits.
-
-\- **\*\*Files to Create:\*\***
-
-  - \`src/pages/public/LandingPage.tsx\`
-
-  - \`src/components/landing/HeroFolder.tsx\`
-
-  - \`src/components/landing/QRPreviewSimulator.tsx\`
-
-  - \`src/components/landing/ItinerarySlip.tsx\`
-
-  - \`src/components/landing/TimetableCard.tsx\`
-
-
-
-**### Step 3.2 — Student Profile Onboarding**
-
-\- **\*\*Action:\*\*** Build a simple onboarding screen for first-time students after Google OAuth login.
-
-\- **\*\*Displayed Details:\*\***
-
-  - Read-only AP number, name, and college email from the verified student record.
-
-  - Show whether the student has an active gym allocation.
-
-  - If student data cannot be matched, show a clear message to contact the Sports Department.
-
-\- **\*\*Files to Create:\*\***
-
-  - \`src/pages/student/Onboarding.tsx\`
-
-\- 🔍 **\*\*User Verification Checkpoint 3:\*\***
-
-  - Open landing page at \`http://localhost:5173/\` -> Test facility tabs and QR preview.
-
-  - Simulate first-time login -> Verify the verified student details and allocation status display correctly.
-
-
-
-
+---
 
 **## 🔳 Phase 4: Student QR Code**
 
