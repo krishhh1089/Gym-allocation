@@ -1,11 +1,14 @@
 from typing import List
-from pydantic import field_validator
+from pydantic import AliasChoices, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     # Database
-    database_url: str
+    database_url: str = Field(
+        default="sqlite+aiosqlite:///:memory:",
+        validation_alias=AliasChoices("DATABASE_URL", "IDENTITY_DB_URL"),
+    )
 
     # Google OAuth 2.0
     google_client_id: str = ""
@@ -25,6 +28,7 @@ class Settings(BaseSettings):
         env_file=".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
+        extra="ignore",
     )
 
     @property
