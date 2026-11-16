@@ -1,0 +1,33 @@
+from app.schemas.gym import (
+    CurrentUser,
+    GymCreate,
+    GymListResponse,
+    GymResponse,
+    GymSlotCreate,
+    GymSlotListResponse,
+    GymSlotResponse,
+    GymSlotUpdate,
+    GymUpdate,
+    SlotScheduleCreate,
+    SlotScheduleResponse,
+    TrainerAssignmentCreate,
+    TrainerAssignmentListResponse,
+    TrainerAssignmentResponse,
+)
+
+__all__ = [
+    "CurrentUser",
+    "GymCreate",
+    "GymUpdate",
+    "GymResponse",
+    "GymListResponse",
+    "GymSlotCreate",
+    "GymSlotUpdate",
+    "GymSlotResponse",
+    "GymSlotListResponse",
+    "SlotScheduleCreate",
+    "SlotScheduleResponse",
+    "TrainerAssignmentCreate",
+    "TrainerAssignmentResponse",
+    "TrainerAssignmentListResponse",
+]

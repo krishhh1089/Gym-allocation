@@ -1,0 +1,12 @@
+alembic
+aiosqlite
+asyncpg
+fastapi[standard]
+pydantic-settings
+pydantic[email]
+python-jose[cryptography]
+sqlalchemy[asyncio]
+uvicorn[standard]
+httpx
+pytest
+pytest-asyncio
