@@ -1,0 +1,1 @@
+"""GymSlot Report Service package."""
