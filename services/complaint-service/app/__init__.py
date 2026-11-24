@@ -1,0 +1,1 @@
+"""GymSlot Complaint Service package."""

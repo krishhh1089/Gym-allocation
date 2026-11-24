@@ -1,0 +1,1 @@
+"""GymSlot Notification Service package."""
