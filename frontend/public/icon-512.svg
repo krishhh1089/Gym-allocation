@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#2e4a3e"/>
+  <rect x="32" y="32" width="448" height="448" fill="none" stroke="#eeecea" stroke-width="10"/>
+  <text x="256" y="315" font-family="'Zilla Slab', Georgia, serif" font-size="240" font-weight="700" fill="#eeecea" text-anchor="middle">G</text>
+  <text x="256" y="395" font-family="monospace" font-size="38" font-weight="600" fill="#93a89d" text-anchor="middle" letter-spacing="10">SRM-AP</text>
+</svg>
+

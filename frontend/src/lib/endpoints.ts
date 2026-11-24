@@ -4,9 +4,10 @@
  */
 
 export const ENDPOINTS = {
-  // Authentication & Identity
+  // Authentication & Identity (services/identity-service)
   AUTH: {
-    GOOGLE_LOGIN: '/auth/google',
+    GOOGLE_REDIRECT: '/auth/google/redirect',
+    GOOGLE_LOGIN: '/auth/google/redirect',
     GOOGLE_CALLBACK: '/auth/google/callback',
     REFRESH: '/auth/refresh',
     LOGOUT: '/auth/logout',

@@ -12,6 +12,16 @@ import { ComplaintsPage } from './pages/student/ComplaintsPage';
 import { QRScannerPage } from './pages/staff/QRScannerPage';
 import { ManualCheckInPage } from './pages/staff/ManualCheckInPage';
 import { SessionRosterPage } from './pages/staff/SessionRosterPage';
+import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { FacilitiesPage } from './pages/admin/FacilitiesPage';
+import { RegistrationWindowsPage } from './pages/admin/RegistrationWindowsPage';
+import { AttendanceAuditPage } from './pages/admin/AttendanceAuditPage';
+import { AbsenceMonitorPage } from './pages/admin/AbsenceMonitorPage';
+import { BulkImportPage } from './pages/admin/BulkImportPage';
+import { ReportsExportPage } from './pages/admin/ReportsExportPage';
+import { StaffManagementPage } from './pages/super-admin/StaffManagementPage';
+import { SystemSettingsPage } from './pages/super-admin/SystemSettingsPage';
+import { AuditTrailPage } from './pages/super-admin/AuditTrailPage';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { useAuthStore } from './stores/useAuthStore';
 import { Badge, Button } from './components/ui';
@@ -48,22 +58,22 @@ export default function App() {
 
         {/* Protected Sports Admin Portal */}
         <Route element={<ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']} />}>
-          <Route path="/admin/dashboard" element={<PlaceholderSlate title="Sports Admin Dashboard" role="ADMIN" />} />
-          <Route path="/admin/facilities" element={<PlaceholderSlate title="Gym Facilities & Recurrence Schedules" role="ADMIN" />} />
-          <Route path="/admin/windows" element={<PlaceholderSlate title="Registration Windows" role="ADMIN" />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/facilities" element={<FacilitiesPage />} />
+          <Route path="/admin/windows" element={<RegistrationWindowsPage />} />
           <Route path="/admin/transfers" element={<PlaceholderSlate title="Transfer Requests Review" role="ADMIN" />} />
-          <Route path="/admin/attendance" element={<PlaceholderSlate title="Attendance Audit & Correction Center" role="ADMIN" />} />
-          <Route path="/admin/absence" element={<PlaceholderSlate title="Absence Monitoring & Allocation Management" role="ADMIN" />} />
+          <Route path="/admin/attendance" element={<AttendanceAuditPage />} />
+          <Route path="/admin/absence" element={<AbsenceMonitorPage />} />
           <Route path="/admin/complaints" element={<PlaceholderSlate title="Complaints Management Desk" role="ADMIN" />} />
-          <Route path="/admin/imports" element={<PlaceholderSlate title="Bulk Excel / CSV Import Hub" role="ADMIN" />} />
-          <Route path="/admin/reports" element={<PlaceholderSlate title="Compliance Analytics & Reports Export" role="ADMIN" />} />
+          <Route path="/admin/imports" element={<BulkImportPage />} />
+          <Route path="/admin/reports" element={<ReportsExportPage />} />
         </Route>
 
         {/* Protected Super Admin */}
         <Route element={<ProtectedRoute allowedRoles={['SUPER_ADMIN']} />}>
-          <Route path="/super-admin/staff" element={<PlaceholderSlate title="Staff Provisioning & Role Delegation" role="SUPER_ADMIN" />} />
-          <Route path="/super-admin/settings" element={<PlaceholderSlate title="System Settings & Domain Rules" role="SUPER_ADMIN" />} />
-          <Route path="/super-admin/audit" element={<PlaceholderSlate title="Immutable Audit Trail Inspector" role="SUPER_ADMIN" />} />
+          <Route path="/super-admin/staff" element={<StaffManagementPage />} />
+          <Route path="/super-admin/settings" element={<SystemSettingsPage />} />
+          <Route path="/super-admin/audit" element={<AuditTrailPage />} />
         </Route>
 
         {/* Catch-all */}
